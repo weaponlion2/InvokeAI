@@ -1,9 +1,15 @@
+import sys
+import os
+
 def main():
-    # Add parent dir to sys.path
-    import sys
-    import os
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+    #sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
     print(sys.path)
+    # Change working directory to the repo root
+    os.chdir(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
     from invokeai.app.api_app import invoke_api
 
     invoke_api()
+
+
+if __name__ == "__main__":
+    main()
