@@ -1,21 +1,26 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2022 Kyle Schouviller (https://github.com/kyle0654)
-
 import os
+import sys
 import logging
 
-logging.getLogger("xformers").addFilter(lambda record: "A matching Triton is not available" not in record.getMessage())
-
+# Optional: filter noisy logs
+logging.getLogger("xformers").addFilter(
+    lambda record: "A matching Triton is not available" not in record.getMessage()
+)
 
 def main():
-    # Change working directory to the repo root
-    os.chdir(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+    # Get the repo root: parent of the scripts folder
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
+    # Add repo root to sys.path so Python can find `invokeai`
+    if repo_root not in sys.path:
+        sys.path.insert(0, repo_root)
+
+    # ✅ Now import works!
     from invokeai.app.api_app import invoke_api
 
     invoke_api()
-
 
 if __name__ == "__main__":
     main()
